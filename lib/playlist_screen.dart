@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-
+import 'package:test_music_app/playlistsong.dart';
 import 'models/playlist_model.dart';
+import 'models/song_model.dart';
 
 class PlaylistScreen extends StatelessWidget {
-  PlaylistScreen({Key? key}) : super(key: key);
+  PlaylistScreen({Key? key,}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    List<Playlist> playlists = Playlist.playlists;
+    List<Song> songs = Song.songs;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -40,28 +42,16 @@ class PlaylistScreen extends StatelessWidget {
                   .textTheme.headline5!
                   .copyWith(fontWeight: FontWeight.bold
                 )),
-                GridView.builder(
-                    itemCount: playlists.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 4,
-                      mainAxisSpacing: 4
-                    ),
-                    itemBuilder: (BuildContext context, int index){
-                      return Container(
-                        height: 75,
-
-                        child: Column(
-                          children: [
-                            Image.network(playlists[index].imageUrl,
-                              height: 50,
-                              width: 50,
-                              fit: BoxFit.cover,
-                            )
-                          ],
-                        ),
-                      );
-                })
+                SizedBox(
+                  height: MediaQuery.of(context).size.height* 0.27,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 2,
+                      itemBuilder: (context, index){
+                        return PlaylistSong(song: songs[index]);
+                      }
+                  ),
+                ),
               ],
             ),
           ),

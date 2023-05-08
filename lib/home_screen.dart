@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:test_music_app/models/playlist_model.dart';
 import 'package:test_music_app/playlist_card.dart';
 import 'package:test_music_app/song_card.dart';
@@ -31,7 +32,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _DiscoverMusic(),
+                _DiscoverMusic(playlist: playlists[0],),
                 SizedBox(height: 20,),
                 SizedBox(
                   height: MediaQuery.of(context).size.height* 0.27,
@@ -132,29 +133,37 @@ class _PlayMusicState extends State<_PlayMusic> {
 
 
 class _DiscoverMusic extends StatelessWidget {
-  const _DiscoverMusic({Key? key}) : super(key: key);
+  const _DiscoverMusic({Key? key, required this.playlist}) : super(key: key);
+
+  final Playlist playlist;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(height: 20,),
-        TextFormField(
-          decoration: InputDecoration(
-              isDense: true,
-              filled: true,
-              fillColor: Colors.white,
-              hintText: 'Search',
-              hintStyle: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: Colors.grey.shade400),
-              prefixIcon:
-              Icon(Icons.search, color: Colors.grey.shade400,),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none
-              )
+        InkWell(
+          onTap: (){
+            Get.toNamed('/playlists', arguments: playlist);
+
+          },
+          child: TextFormField(
+            decoration: InputDecoration(
+                isDense: true,
+                filled: true,
+                fillColor: Colors.white,
+                hintText: 'Search',
+                hintStyle: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Colors.grey.shade400),
+                prefixIcon:
+                Icon(Icons.search, color: Colors.grey.shade400,),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none
+                )
+            ),
           ),
         ),
         SizedBox(height: 20,),
